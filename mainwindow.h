@@ -25,6 +25,7 @@ private slots:
 
 private:
   Ui::MainWindow *ui;
+  // QLineEdit *tempOutput;
 };
 
 #endif // MAINWINDOW_H
