@@ -26,6 +26,7 @@ private slots:
 private:
   Ui::MainWindow *ui;
   // QLineEdit *tempOutput;
+  void updateWeather(const QJsonDocument& jsonRes);
 };
 
 #endif // MAINWINDOW_H
