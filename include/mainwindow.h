@@ -14,19 +14,20 @@ class MainWindow;
 }
 
 class MainWindow : public QMainWindow {
-  Q_OBJECT
+ Q_OBJECT
 
-public:
+ public:
   explicit MainWindow(QWidget *parent = nullptr);
   ~MainWindow();
 
-private slots:
+ private slots:
   void fetchWeather();
 
-private:
+ private:
   Ui::MainWindow *ui;
   // QLineEdit *tempOutput;
-  void updateWeather(const QJsonDocument& jsonRes);
+  std::string apiKey;
+  void updateWeather(const QJsonDocument &jsonRes);
 };
 
 #endif // MAINWINDOW_H

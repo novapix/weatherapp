@@ -12,6 +12,7 @@ using std::string;
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
   ui->setupUi(this);
   auto *a = new ApiCheck;
+  apiKey = a->readApiKeyFromFile();
   delete a;
   connect(ui->btnFetch, &QPushButton::clicked, this, &MainWindow::fetchWeather);
   // connect(ui->btnFetch, SIGNAL(returnPressed()), this, &MainWindow::fetchWeather);
@@ -24,7 +25,6 @@ MainWindow::~MainWindow() {
 void MainWindow::fetchWeather() {
   QString cityInput = ui->cityInput->text();
   string city = cityInput.toStdString();
-  const string apiKey = "1dea90367fcac1da75256f330de88439";
   if (apiKey.empty()) {
 	QMessageBox::warning(this, "API ERROR", "Please Add API KEY");
   } else {
