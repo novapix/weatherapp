@@ -1,4 +1,5 @@
 #include "../include/mainwindow.h"
+#include "../include/apichecker.h"
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonValue>
@@ -8,9 +9,10 @@
 
 using std::string;
 
-MainWindow::MainWindow(QWidget *parent)
-	: QMainWindow(parent), ui(new Ui::MainWindow) {
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
   ui->setupUi(this);
+  auto *a = new ApiCheck;
+  delete a;
   connect(ui->btnFetch, &QPushButton::clicked, this, &MainWindow::fetchWeather);
   // connect(ui->btnFetch, SIGNAL(returnPressed()), this, &MainWindow::fetchWeather);
 }

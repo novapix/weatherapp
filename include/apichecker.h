@@ -2,17 +2,27 @@
 #define WEATHERAPP_INCLUDE_APICHECKER_H_
 
 #include <cpr/cpr.h>
+#include <QApplication>
 #include <QMainWindow>
 #include <QPushButton>
+#include <QMessageBox>
+#include <QFile>
+#include <QTextStream>
+#include <QInputDialog>
 
 using std::string;
 
-class ApiCheck {
+class ApiCheck : public QObject {
+ Q_OBJECT
  private:
-  const string configLocation = "apikey.txt";
+  string configLocation = "apikey.txt";
  public:
-  explicit ApiCheck();
-  void checkFileExists();
+  explicit ApiCheck(QObject *parent = nullptr);
+  void checkFileExists() const;
+  void takeAPIInput() const;
+  bool writeToFile(string &apiKey) const;
+  bool validateAPIKey(string &apiKey) const;
+  ~ApiCheck();
 };
 
 #endif //WEATHERAPP_INCLUDE_APICHECKER_H_
