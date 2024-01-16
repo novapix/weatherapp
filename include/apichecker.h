@@ -21,8 +21,9 @@ class ApiCheck : public QObject {
   void checkFileExists() const;
   void takeAPIInput() const;
   bool writeToFile(string &apiKey) const;
-  bool validateAPIKey(string &apiKey) const;
-  ~ApiCheck();
+  static bool validateAPIKey(string &apiKey);
+  string readApiKeyFromFile() const;
+//  ~ApiCheck();
 };
 
 #endif //WEATHERAPP_INCLUDE_APICHECKER_H_

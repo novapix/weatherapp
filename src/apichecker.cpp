@@ -12,8 +12,9 @@ void ApiCheck::checkFileExists() const {
   if (!std::filesystem::exists(f)) {
 	takeAPIInput();
   } else {
-	// DO SOMETHING TO VALIDATE API KEY
-//	validateAPIKey();
+	string apiKey = readApiKeyFromFile();
+	bool valid = validateAPIKey(apiKey);
+	if (!valid) { takeAPIInput(); }
   }
 }
 
@@ -49,7 +50,24 @@ bool ApiCheck::writeToFile(string &apiKey) const {
   return false;
 }
 
-bool ApiCheck::validateAPIKey(std::string &apiKey) const {
-  cpr::Response res = cpr::Get(cpr::Url{});
+bool ApiCheck::validateAPIKey(string &apiKey) {
+  string reqUrl = std::format("https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99&appid={}", apiKey);
+  cpr::Response res = cpr::Get(cpr::Url{reqUrl});
   return res.status_code == 200;
+}
+
+string ApiCheck::readApiKeyFromFile() const {
+  QString apiKey;
+  QFile file(configLocation.c_str());
+
+  if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+	QTextStream in(&file);
+	apiKey = in.readLine();
+	file.close();
+  } else {
+	QMessageBox::critical(nullptr, "Error", "Failed to read API key to file. Exiting.");
+	QApplication::exit(EXIT_FAILURE);
+  }
+  
+  return apiKey.toStdString();
 }
