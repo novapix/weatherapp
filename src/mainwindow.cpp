@@ -29,7 +29,8 @@ void MainWindow::fetchWeather() {
 	QMessageBox::warning(this, "API ERROR", "Please Add API KEY");
   } else {
 	const string baseUrl = "https://api.openweathermap.org/data/2.5/weather?q=";
-	string reqURL = std::format("{}{}&appid={}", baseUrl, city, apiKey);
+	string reqURL = std::format("{}{}&appid={}", baseUrl, cpr::util::urlEncode(city), apiKey);
+	qDebug() << reqURL;
 	cpr::Response res = cpr::Get(cpr::Url{reqURL});
 	if (res.status_code == 404) {
 	  QMessageBox::warning(this, "Error", "City not Found");
