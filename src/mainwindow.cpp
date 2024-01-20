@@ -30,38 +30,35 @@ MainWindow::~MainWindow() {
 void MainWindow::fetchWeather() {
   QString cityInput = ui->cityInput->text();
   string city = cityInput.toStdString();
-  if (apiKey.empty()) {
-	QMessageBox::warning(this, "API ERROR", "Please Add API KEY");
-  } else {
-	const string baseUrl = "https://api.openweathermap.org/data/2.5/weather?q=";
-	string reqURL = std::format("{}{}&appid={}", baseUrl, cpr::util::urlEncode(city), apiKey);
-	qDebug() << reqURL;
-	cpr::Response res = cpr::Get(cpr::Url{reqURL});
-	if (res.status_code != 200) {
-	  if (res.status_code == 404) {
-		QMessageBox::warning(this, "Error", "City not Found");
-	  } else {
-		QMessageBox::warning(this, "Error", "failed to fetch weather data");
-	  }
-	}
-	QJsonDocument jsonResponse = QJsonDocument::fromJson(res.text.c_str());
-	if (jsonResponse.isObject()) {
-	  QString assetsPath = QCoreApplication::applicationDirPath() + "/../assets";
-	  qDebug() << assetsPath;
-	  QString backgroundImage = QDir(assetsPath).filePath("night.png");
-	  QPixmap backgroundPixmap(backgroundImage);
-	  qDebug() << "Resource Prefix:" << QCoreApplication::applicationDirPath();
 
-	  if (backgroundPixmap.isNull()) {
-		qDebug() << "Failed to load background image.";
-	  } else {
-		ui->backgroundLabel->setPixmap(backgroundPixmap);
-	  }
-
-	  updateWeather(jsonResponse);
+  const string baseUrl = "https://api.openweathermap.org/data/2.5/weather?q=";
+  string reqURL = std::format("{}{}&appid={}", baseUrl, cpr::util::urlEncode(city), apiKey);
+  qDebug() << reqURL;
+  cpr::Response res = cpr::Get(cpr::Url{reqURL});
+  if (res.status_code != 200) {
+	if (res.status_code == 404) {
+	  QMessageBox::warning(this, "Error", "City not Found");
 	} else {
-	  QMessageBox::warning(this, "Error", "Invalid JSON document.");
+	  QMessageBox::warning(this, "Error", "failed to fetch weather data");
 	}
+  }
+  QJsonDocument jsonResponse = QJsonDocument::fromJson(res.text.c_str());
+  if (jsonResponse.isObject()) {
+	QString assetsPath = QCoreApplication::applicationDirPath() + "/../assets";
+	qDebug() << assetsPath;
+	QString backgroundImage = QDir(assetsPath).filePath("night.png");
+	QPixmap backgroundPixmap(backgroundImage);
+	qDebug() << "Resource Prefix:" << QCoreApplication::applicationDirPath();
+
+	if (backgroundPixmap.isNull()) {
+	  qDebug() << "Failed to load background image.";
+	} else {
+	  ui->backgroundLabel->setPixmap(backgroundPixmap);
+	}
+
+	updateWeather(jsonResponse);
+  } else {
+	QMessageBox::warning(this, "Error", "Invalid JSON document.");
   }
 }
 
