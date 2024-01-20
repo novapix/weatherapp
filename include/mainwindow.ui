@@ -6,15 +6,18 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>488</width>
-    <height>524</height>
+    <width>480</width>
+    <height>960</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>weatherapp</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="cityLabel">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -53,8 +56,8 @@
    <widget class="QTextEdit" name="tempDetailsText">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>170</y>
+      <x>90</x>
+      <y>140</y>
       <width>251</width>
       <height>81</height>
      </rect>
@@ -63,24 +66,23 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QFrame" name="frame">
+   <widget class="QLabel" name="backgroundLabel">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>170</y>
-      <width>120</width>
-      <height>80</height>
+      <x>100</x>
+      <y>540</y>
+      <width>291</width>
+      <height>18</height>
      </rect>
     </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
+    <property name="text">
+     <string/>
     </property>
    </widget>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../weatherapp.qrc"/>
+ </resources>
  <connections/>
 </ui>
