@@ -68,7 +68,8 @@ void MainWindow::updateWeather(const QJsonDocument &jsonRes) {
   double temperature = jsonRes.object()["main"].toObject()["temp"].toDouble() - 273.15;
   double maxTemp = jsonRes.object()["main"].toObject()["temp_max"].toDouble() - 273.15;
   double minTemp = jsonRes.object()["main"].toObject()["temp_min"].toDouble() - 273.15;
-
+  ui->presentLabel->setText(QString("Current Weather"));
+//  ui->tempDetailsText->setAlignment(Qt::AlignCenter);
   ui->tempDetailsText->setText(QString("Temperature: %1 °C\n"
 									   "Max Temp: %2 °C\n"
 									   "Min Temp: %3 °C")
