@@ -1,5 +1,6 @@
 #include "../include/mainwindow.h"
 #include "../include/apichecker.h"
+#include "../include/geocoding.h"
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonValue>
@@ -29,9 +30,11 @@ MainWindow::~MainWindow() {
 
 void MainWindow::fetchWeather() {
   QString cityInput = ui->cityInput->text();
+  string baseUrl;
+//  if(cityInput.isEmpty())
   string city = cityInput.toStdString();
 
-  const string baseUrl = "https://api.openweathermap.org/data/2.5/weather?q=";
+  baseUrl = "https://api.openweathermap.org/data/2.5/weather?q=";
   string reqURL = std::format("{}{}&appid={}", baseUrl, cpr::util::urlEncode(city), apiKey);
   qDebug() << reqURL;
   cpr::Response res = cpr::Get(cpr::Url{reqURL});
@@ -46,7 +49,7 @@ void MainWindow::fetchWeather() {
   if (jsonResponse.isObject()) {
 	QString assetsPath = QCoreApplication::applicationDirPath() + "/../assets";
 	qDebug() << assetsPath;
-	QString backgroundImage = QDir(assetsPath).filePath("night.png");
+	QString backgroundImage = QDir(assetsPath).filePath("day.png");
 	QPixmap backgroundPixmap(backgroundImage);
 	qDebug() << "Resource Prefix:" << QCoreApplication::applicationDirPath();
 

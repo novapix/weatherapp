@@ -21,6 +21,8 @@ set(PROJECT_SOURCES
         include/mainwindow.ui
         include/apichecker.h
         src/apichecker.cpp
+        include/geocoding.h
+        src/geocoding.cpp
 )
 
 if (TARGET Qt6::Widgets)
