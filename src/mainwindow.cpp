@@ -30,14 +30,20 @@ MainWindow::~MainWindow() {
 
 void MainWindow::fetchWeather() {
   QString cityInput = ui->cityInput->text();
-  string baseUrl;
-//  if(cityInput.isEmpty())
-  string city = cityInput.toStdString();
+  string baseURL;
+  string reqURL;
+  if (cityInput.isEmpty()) {
+	baseURL = "https://api.openweathermap.org/data/2.5/weather?";
+	struct geoData data = geoCoding::workersAPI();
+	reqURL = std::format("{}lat={}&lon={}&appid={}", baseURL, data.latitude, data.longitude, apiKey);
 
-  baseUrl = "https://api.openweathermap.org/data/2.5/weather?q=";
-  string reqURL = std::format("{}{}&appid={}", baseUrl, cpr::util::urlEncode(city), apiKey);
+  } else {
+	baseURL = "https://api.openweathermap.org/data/2.5/weather?q=";
+	reqURL = std::format("{}{}&appid={}", baseURL, cpr::util::urlEncode(cityInput.toStdString()), apiKey);
+  }
   qDebug() << reqURL;
   cpr::Response res = cpr::Get(cpr::Url{reqURL});
+  qDebug() << res.text;
   if (res.status_code != 200) {
 	if (res.status_code == 404) {
 	  QMessageBox::warning(this, "Error", "City not Found");

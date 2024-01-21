@@ -19,6 +19,7 @@ struct geoData geoCoding::workersAPI() {
   }
   return data;
 }
+
 struct geoData geoCoding::backupAPI() {
   cpr::Response res = cpr::Get(cpr::Url{backupURL});
   if (res.status_code == 200) {
