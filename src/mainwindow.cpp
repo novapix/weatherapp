@@ -2,8 +2,6 @@
 #include "../include/apichecker.h"
 #include "../include/geocoding.h"
 #include <QJsonDocument>
-#include <QJsonObject>
-#include <QJsonValue>
 #include <QMessageBox>
 #include "../include/ui_mainwindow.h"
 #include <format>
@@ -30,16 +28,16 @@ MainWindow::~MainWindow() {
 
 void MainWindow::fetchWeather() {
   QString cityInput = ui->cityInput->text();
-  string baseURL;
+  const string baseURL = "https://api.openweathermap.org/data/2.5/weather?";
   string reqURL;
   if (cityInput.isEmpty()) {
-	baseURL = "https://api.openweathermap.org/data/2.5/weather?";
 	struct geoData data = geoCoding::workersAPI();
+	if (data.latitude > 90 || data.longitude > 180) {
+	  QMessageBox::warning(this, "Error", "Unable to get geo coordinates");
+	}
 	reqURL = std::format("{}lat={}&lon={}&appid={}", baseURL, data.latitude, data.longitude, apiKey);
-
   } else {
-	baseURL = "https://api.openweathermap.org/data/2.5/weather?q=";
-	reqURL = std::format("{}{}&appid={}", baseURL, cpr::util::urlEncode(cityInput.toStdString()), apiKey);
+	reqURL = std::format("{}q={}&appid={}", baseURL, cpr::util::urlEncode(cityInput.toStdString()), apiKey);
   }
   qDebug() << reqURL;
   cpr::Response res = cpr::Get(cpr::Url{reqURL});

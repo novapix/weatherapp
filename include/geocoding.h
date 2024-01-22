@@ -8,9 +8,8 @@
 using std::string;
 
 struct geoData {
-  bool success;
-  string latitude;
-  string longitude;
+  double latitude;
+  double longitude;
 };
 
 class geoCoding {

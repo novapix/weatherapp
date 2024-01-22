@@ -22,7 +22,7 @@ class ApiCheck : public QObject {
   void takeAPIInput() const;
   bool writeToFile(string &apiKey) const;
   static bool validateAPIKey(string &apiKey);
-  string readApiKeyFromFile() const;
+  [[nodiscard]] string readApiKeyFromFile() const;
 //  ~ApiCheck();
 };
 

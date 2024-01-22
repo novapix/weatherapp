@@ -8,15 +8,15 @@ const string backupURL = "https://ipapi.co/json/";
 
 struct geoData geoCoding::workersAPI() {
   cpr::Response res = cpr::Get(cpr::Url{workersURL});
-  struct geoData data;
+  struct geoData data{};
   if (res.status_code == 200) {
 	QJsonDocument jsonRes = QJsonDocument::fromJson(res.text.c_str());
-	data.success = true;
-	data.latitude = jsonRes.object()["lat"].toString().toStdString(); // convert jsonObject to QString then to stdString
-	data.longitude = jsonRes.object()["lon"].toString().toStdString();
+	data.latitude = jsonRes.object()["lat"].toString().toDouble(); // convert jsonObject to QString then to stdString
+	data.longitude = jsonRes.object()["lon"].toString().toDouble();
   } else {
 	data = geoCoding::backupAPI();
   }
+  qDebug() << data.latitude;
   return data;
 }
 
@@ -24,10 +24,10 @@ struct geoData geoCoding::backupAPI() {
   cpr::Response res = cpr::Get(cpr::Url{backupURL});
   if (res.status_code == 200) {
 	QJsonDocument jsonRes = QJsonDocument::fromJson(res.text.c_str());
-	string lat = jsonRes.object()["latitude"].toString().toStdString();
-	string lon = jsonRes.object()["longitude"].toString().toStdString();
-	return {true, lat, lon};
+	double lat = jsonRes.object()["latitude"].toDouble();
+	double lon = jsonRes.object()["longitude"].toDouble();
+	return {lat, lon};
   } else {
-	return {false, "0", "0"};
+	return {999, 999};
   }
 }
