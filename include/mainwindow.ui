@@ -53,23 +53,6 @@
      <string>Get</string>
     </property>
    </widget>
-   <widget class="QTextEdit" name="tempDetailsText">
-    <property name="geometry">
-     <rect>
-      <x>80</x>
-      <y>150</y>
-      <width>251</width>
-      <height>81</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgba(255, 255, 255, 0);color: black;
-font: 12pt &quot;Sans Serif&quot;;</string>
-    </property>
-    <property name="readOnly">
-     <bool>true</bool>
-    </property>
-   </widget>
    <widget class="QLabel" name="backgroundLabel">
     <property name="geometry">
      <rect>
@@ -130,6 +113,29 @@ border: 1px solid transparent;
     </property>
     <property name="text">
      <string>Clear</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="tempDetails">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>150</y>
+      <width>250</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: black;
+font: 12pt &quot;Sans Serif&quot;;
+background: transparent;
+border: 1px solid transparent;
+</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
   </widget>
