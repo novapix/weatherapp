@@ -24,8 +24,8 @@ struct geoData geoCoding::backupAPI() {
   cpr::Response res = cpr::Get(cpr::Url{backupURL});
   if (res.status_code == 200) {
 	QJsonDocument jsonRes = QJsonDocument::fromJson(res.text.c_str());
-	double lat = jsonRes.object()["latitude"].toDouble();
-	double lon = jsonRes.object()["longitude"].toDouble();
+	double lat = jsonRes.object()["latitude"].toString().toDouble();
+	double lon = jsonRes.object()["longitude"].toString().toDouble();
 	return {lat, lon};
   } else {
 	return {999, 999};

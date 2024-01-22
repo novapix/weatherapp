@@ -19,6 +19,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
   apiKey = a->readApiKeyFromFile();
   delete a;
   connect(ui->btnFetch, &QPushButton::clicked, this, &MainWindow::fetchWeather);
+  connect(ui->btnClear, &QPushButton::clicked, this, &MainWindow::clearResults);
   // connect(ui->btnFetch, SIGNAL(returnPressed()), this, &MainWindow::fetchWeather);
 }
 
@@ -84,5 +85,11 @@ void MainWindow::updateWeather(const QJsonDocument &jsonRes) {
 								   .arg(maxTemp)
 								   .arg(minTemp));
 
+}
+void MainWindow::clearResults() {
+  ui->backgroundLabel->clear();
+  ui->tempDetailsText->clear();
+  ui->presentLabel->clear();
+  ui->cityInput->clear();
 }
 

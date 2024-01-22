@@ -28,6 +28,7 @@ class MainWindow : public QMainWindow {
   // QLineEdit *tempOutput;
   std::string apiKey;
   void updateWeather(const QJsonDocument &jsonRes);
+  void clearResults();
 };
 
 #endif // MAINWINDOW_H
