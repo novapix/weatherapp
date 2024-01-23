@@ -9,7 +9,11 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(cpr REQUIRED)
+#include(FetchContent)
+#FetchContent_Declare(cpr GIT_REPOSITORY https://github.com/libcpr/cpr.git
+#        GIT_TAG 3b15fa82ea74739b574d705fea44959b58142eb8)
+#FetchContent_MakeAvailable(cpr)
+find_package(cpr CONFIG REQUIRED)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
