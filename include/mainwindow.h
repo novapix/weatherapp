@@ -7,7 +7,7 @@
 #include <QLineEdit>
 #include <QMainWindow>
 #include <QPushButton>
-#include <cpr/cpr.h> // Include the libcpr header
+#include <cpr/cpr.h>
 
 namespace Ui {
 class MainWindow;
@@ -26,7 +26,8 @@ class MainWindow : public QMainWindow {
  private:
   Ui::MainWindow *ui;
   // QLineEdit *tempOutput;
-  std::string apiKey;
+  static std::string apiKey;
+
   void updateWeather(const QJsonDocument &jsonRes);
   void clearResults();
 };

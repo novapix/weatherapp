@@ -118,8 +118,8 @@ border: 1px solid transparent;
    <widget class="QLabel" name="tempDetails">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>150</y>
+      <x>150</x>
+      <y>180</y>
       <width>250</width>
       <height>80</height>
      </rect>
@@ -136,6 +136,19 @@ border: 1px solid transparent;
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="presentIcon">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>180</y>
+      <width>80</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
     </property>
    </widget>
   </widget>

@@ -53,17 +53,24 @@ void MainWindow::fetchWeather() {
   QJsonDocument jsonResponse = QJsonDocument::fromJson(res.text.c_str());
   if (jsonResponse.isObject()) {
 	QString assetsPath = QCoreApplication::applicationDirPath() + "/../assets";
+	QString iconsPath = assetsPath + "/wicons";
 	qDebug() << assetsPath;
 	QString backgroundImage = QDir(assetsPath).filePath("day.png");
 	QPixmap backgroundPixmap(backgroundImage);
 	qDebug() << "Resource Prefix:" << QCoreApplication::applicationDirPath();
-
-	if (backgroundPixmap.isNull()) {
+	qDebug() << iconsPath;
+	QString iconsImage = QDir(iconsPath).filePath("01d.png");
+	QPixmap iconsPixmap(iconsImage);
+//	if (backgroundPixmap.isNull()) {
+//	  qDebug() << "Failed to load background image.";
+//	} else {
+//	  ui->backgroundLabel->setPixmap(backgroundPixmap);
+//	}
+	if (iconsPixmap.isNull()) {
 	  qDebug() << "Failed to load background image.";
 	} else {
-	  ui->backgroundLabel->setPixmap(backgroundPixmap);
+	  ui->presentIcon->setPixmap(iconsPixmap);
 	}
-
 	updateWeather(jsonResponse);
   } else {
 	QMessageBox::warning(this, "Error", "Invalid JSON document.");
