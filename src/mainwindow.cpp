@@ -4,6 +4,7 @@
 #include <QJsonDocument>
 #include <QMessageBox>
 #include "../include/ui_mainwindow.h"
+#include <optional>
 #include <format>
 #include <QDir>
 #include <QPixmap>
@@ -41,56 +42,37 @@ void MainWindow::fetchWeather() {
 	reqURL = std::format("{}q={}&appid={}", baseURL, cpr::util::urlEncode(cityInput.toStdString()), apiKey);
   }
   qDebug() << reqURL;
-  cpr::Response res = cpr::Get(cpr::Url{reqURL});
-  qDebug() << res.text;
-  if (res.status_code != 200) {
-	if (res.status_code == 404) {
+  resData res = WeatherFetcher::fetchData(reqURL);
+  qDebug() << res.resText;
+  if (res.statusCode != 200) {
+	if (res.statusCode == 404) {
 	  QMessageBox::warning(this, "Error", "City not Found");
 	} else {
 	  QMessageBox::warning(this, "Error", "failed to fetch weather data");
 	}
   }
-  QJsonDocument jsonResponse = QJsonDocument::fromJson(res.text.c_str());
-  if (jsonResponse.isObject()) {
-	QString assetsPath = QCoreApplication::applicationDirPath() + "/../assets";
-	QString iconsPath = assetsPath + "/wicons";
-	qDebug() << assetsPath;
-	QString backgroundImage = QDir(assetsPath).filePath("day.png");
-	QPixmap backgroundPixmap(backgroundImage);
-	qDebug() << "Resource Prefix:" << QCoreApplication::applicationDirPath();
-	qDebug() << iconsPath;
-	QString iconsImage = QDir(iconsPath).filePath("01d.png");
-	QPixmap iconsPixmap(iconsImage);
-//	if (backgroundPixmap.isNull()) {
-//	  qDebug() << "Failed to load background image.";
-//	} else {
-//	  ui->backgroundLabel->setPixmap(backgroundPixmap);
-//	}
-	if (iconsPixmap.isNull()) {
-	  qDebug() << "Failed to load background image.";
-	} else {
-	  ui->presentIcon->setPixmap(iconsPixmap);
-	}
-	updateWeather(jsonResponse);
+  std::optional<weatherData> wdata = WeatherFetcher::parseWeather(res.resText);
+  if (wdata) {
+	weatherData data = wdata.value();
+	updateWeather(data);
+
   } else {
 	QMessageBox::warning(this, "Error", "Invalid JSON document.");
   }
 }
 
-void MainWindow::updateWeather(const QJsonDocument &jsonRes) {
+void MainWindow::updateWeather(const weatherData &wData) {
   // Get the "main" object and extract the temperature, using 0.0 as a default
   // if "temp" is not present
-  double temperature = jsonRes.object()["main"].toObject()["temp"].toDouble() - 273.15;
-  double maxTemp = jsonRes.object()["main"].toObject()["temp_max"].toDouble() - 273.15;
-  double minTemp = jsonRes.object()["main"].toObject()["temp_min"].toDouble() - 273.15;
+
   ui->presentLabel->setText(QString("Current Weather"));
 //  ui->tempDetailsText->setAlignment(Qt::AlignCenter);
   ui->tempDetails->setText(QString("Temperature: %1 °C\n"
 								   "Max Temp: %2 °C\n"
 								   "Min Temp: %3 °C")
-							   .arg(temperature)
-							   .arg(maxTemp)
-							   .arg(minTemp));
+							   .arg(wData.temperature)
+							   .arg(wData.temperatureMax)
+							   .arg(wData.temparatureMin));
 
 }
 void MainWindow::clearResults() {

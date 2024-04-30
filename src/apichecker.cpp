@@ -16,6 +16,7 @@ void ApiCheck::checkFileExists() const {
 	bool valid = validateAPIKey(apiKey);
 	if (!valid) { takeAPIInput(); }
   }
+
 }
 
 void ApiCheck::takeAPIInput() const {
@@ -68,6 +69,6 @@ string ApiCheck::readApiKeyFromFile() const {
 	QMessageBox::critical(nullptr, "Error", "Failed to read API key to file. Exiting.");
 	QApplication::exit(EXIT_FAILURE);
   }
-  
+
   return apiKey.toStdString();
 }

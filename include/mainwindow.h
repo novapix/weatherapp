@@ -7,6 +7,7 @@
 #include <QLineEdit>
 #include <QMainWindow>
 #include <QPushButton>
+#include "../include/weatherfetching.h"
 #include <cpr/cpr.h>
 
 namespace Ui {
@@ -26,9 +27,9 @@ class MainWindow : public QMainWindow {
  private:
   Ui::MainWindow *ui;
   // QLineEdit *tempOutput;
-  static std::string apiKey;
+  std::string apiKey;
 
-  void updateWeather(const QJsonDocument &jsonRes);
+  void updateWeather(const weatherData &wData);
   void clearResults();
 };
 

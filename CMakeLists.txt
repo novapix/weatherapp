@@ -13,6 +13,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #FetchContent_Declare(cpr GIT_REPOSITORY https://github.com/libcpr/cpr.git
 #        GIT_TAG 3b15fa82ea74739b574d705fea44959b58142eb8)
 #FetchContent_MakeAvailable(cpr)
+# set(CMAKE_TOOLCHAIN_FILE "/opt/vcpkg/scripts/buildsystems/vcpkg.cmake")
 find_package(cpr CONFIG REQUIRED)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
@@ -27,10 +28,13 @@ set(PROJECT_SOURCES
         src/apichecker.cpp
         include/geocoding.h
         src/geocoding.cpp
+        include/weatherfetching.h
+        src/weatherfetching.cpp
 )
 
 if (TARGET Qt6::Widgets)
-    qt_add_executable(weatherapp MANUAL_FINALIZATION ${PROJECT_SOURCES})
+    qt_add_executable(weatherapp MANUAL_FINALIZATION ${PROJECT_SOURCES}
+        icons.qrc)
 else ()
     add_executable(weatherapp ${PROJECT_SOURCES})
 endif ()
