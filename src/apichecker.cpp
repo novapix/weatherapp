@@ -16,14 +16,22 @@ void ApiCheck::checkFileExists() const {
 	bool valid = validateAPIKey(apiKey);
 	if (!valid) { takeAPIInput(); }
   }
+
 }
 
 void ApiCheck::takeAPIInput() const {
   bool validInput = false;
   string apiKey;
   do {
-	QString api = QInputDialog::getText(nullptr, "Enter API Key", "Please Enter Your API key");
+	QString api = QInputDialog::getText(nullptr, "Enter API Key", "Please Enter Your API key",
+										QLineEdit::Normal, QString(), &validInput);
 	apiKey = api.toStdString();
+	if (!validInput) {
+	  // User canceled the dialog, exit the loop
+	  QMessageBox::critical(nullptr, "Error", "Application Cannot Work Without API KEY. Exiting");
+	  exit(1);
+//	  break;
+	}
 
 	if (!writeToFile(apiKey)) {
 	  QMessageBox::critical(nullptr, "Error", "Failed to save API key to file. Exiting.");
@@ -51,7 +59,8 @@ bool ApiCheck::writeToFile(string &apiKey) const {
 }
 
 bool ApiCheck::validateAPIKey(string &apiKey) {
-  string reqUrl = std::format("https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99&appid={}", apiKey);
+  string reqUrl = std::format("https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99&appid={}",
+							  apiKey);
   cpr::Response res = cpr::Get(cpr::Url{reqUrl});
   return res.status_code == 200;
 }
@@ -59,7 +68,6 @@ bool ApiCheck::validateAPIKey(string &apiKey) {
 string ApiCheck::readApiKeyFromFile() const {
   QString apiKey;
   QFile file(configLocation.c_str());
-
   if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
 	QTextStream in(&file);
 	apiKey = in.readLine();
@@ -68,6 +76,6 @@ string ApiCheck::readApiKeyFromFile() const {
 	QMessageBox::critical(nullptr, "Error", "Failed to read API key to file. Exiting.");
 	QApplication::exit(EXIT_FAILURE);
   }
-  
+
   return apiKey.toStdString();
 }

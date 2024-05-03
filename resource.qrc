@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/resource">
+        <file>assets/day.png</file>
+        <file>assets/icon.png</file>
+        <file>assets/night.png</file>
+    </qresource>
+</RCC>

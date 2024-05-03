@@ -45,7 +45,7 @@
      <rect>
       <x>240</x>
       <y>40</y>
-      <width>80</width>
+      <width>111</width>
       <height>25</height>
      </rect>
     </property>
@@ -89,25 +89,12 @@ border: 1px solid transparent;
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QPushButton" name="btnForecast">
-    <property name="geometry">
-     <rect>
-      <x>320</x>
-      <y>40</y>
-      <width>80</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Forecast</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="btnClear">
     <property name="geometry">
      <rect>
-      <x>400</x>
+      <x>359</x>
       <y>40</y>
-      <width>70</width>
+      <width>111</width>
       <height>25</height>
      </rect>
     </property>
@@ -118,8 +105,8 @@ border: 1px solid transparent;
    <widget class="QLabel" name="tempDetails">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>150</y>
+      <x>150</x>
+      <y>180</y>
       <width>250</width>
       <height>80</height>
      </rect>
@@ -136,6 +123,19 @@ border: 1px solid transparent;
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="presentIcon">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>180</y>
+      <width>80</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
     </property>
    </widget>
   </widget>

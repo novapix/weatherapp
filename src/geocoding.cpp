@@ -16,7 +16,6 @@ struct geoData geoCoding::workersAPI() {
   } else {
 	data = geoCoding::backupAPI();
   }
-  qDebug() << data.latitude;
   return data;
 }
 
