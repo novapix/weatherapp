@@ -80,7 +80,18 @@ void MainWindow::updateWeather(const weatherData &wData) {
   ui->presentIcon->setPixmap(QPixmap(std::format(":/icons/assets/wicons/{}", wData.icon).c_str()));
   bool isDay = isDayTime(wData.currentDt, wData.sunriseDT, wData.sunsetDT);
   qDebug() << isDay;
+  QString backgroundFile;
   if (isDay) {
+	backgroundFile = ":/resource/assets/day.png";
+  } else {
+	backgroundFile = ":/resource/assets/night.png";
+  }
+  qDebug() << "Resource Prefix:" << QCoreApplication::applicationDirPath();
+  QPixmap backgroundPixmap(backgroundFile);
+  if (backgroundPixmap.isNull()) {
+	qDebug() << "Failed to load background image.";
+  } else {
+	ui->backgroundLabel->setPixmap(backgroundPixmap);
   }
 }
 
