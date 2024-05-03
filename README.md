@@ -42,7 +42,7 @@ The goal of the project was to develop a desktop application using C++ and the Q
 1. Clone the repository:
 
 ```shell
-git clone https://github.com/novapix/weatherapp
+git clone https://github.com/novapix/weatherapp.git
 ```
 
 2. Install `libcpr` using vcpkg: `vcpkg install cpr`
