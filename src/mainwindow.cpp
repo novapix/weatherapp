@@ -12,6 +12,15 @@ using std::string;
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
   ui->setupUi(this);
+  setWindowTitle("Weather App");
+//  setWindowIcon(QIcon(":/resource/assets/icon.png"));
+  QIcon icon(":/resource/assets/icon.png");  // Using the /resource prefix
+  if (icon.isNull()) {
+	qDebug() << "Error: Failed to load window icon!";
+  } else {
+	// Set the window icon
+	setWindowIcon(icon);
+  }
   ui->backgroundLabel->setGeometry(0, 0, width(), height());
   ui->backgroundLabel->setScaledContents(true); // Scale background to QLabel Size
   ui->backgroundLabel->lower(); // Lowers the QLabel in the stacking order
@@ -60,9 +69,6 @@ void MainWindow::fetchWeather() {
 }
 
 void MainWindow::updateWeather(const weatherData &wData) {
-  // Get the "main" object and extract the temperature, using 0.0 as a default
-  // if "temp" is not present
-
   ui->presentLabel->setText(QString("Current Weather"));
 //  ui->tempDetailsText->setAlignment(Qt::AlignCenter);
   ui->tempDetails->setText(QString("Temperature: %1 °C\n"
@@ -71,12 +77,22 @@ void MainWindow::updateWeather(const weatherData &wData) {
 							   .arg(wData.temperature)
 							   .arg(wData.temperatureMax)
 							   .arg(wData.temparatureMin));
-
+  ui->presentIcon->setPixmap(QPixmap(std::format(":/icons/assets/wicons/{}", wData.icon).c_str()));
+  bool isDay = isDayTime(wData.currentDt, wData.sunriseDT, wData.sunsetDT);
+  qDebug() << isDay;
+  if (isDay) {
+  }
 }
+
 void MainWindow::clearResults() {
   ui->backgroundLabel->clear();
   ui->tempDetails->clear();
   ui->presentLabel->clear();
   ui->cityInput->clear();
+  ui->presentIcon->clear();
 }
+bool MainWindow::isDayTime(std::time_t currentTime, std::time_t sunriseTime, std::time_t sunsetTime) {
+  return currentTime >= sunriseTime && currentTime <= sunsetTime;
+}
+
 

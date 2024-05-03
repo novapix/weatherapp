@@ -8,6 +8,7 @@
 #include <QMainWindow>
 #include <QPushButton>
 #include "../include/weatherfetching.h"
+#include <ctime>
 #include <cpr/cpr.h>
 
 namespace Ui {
@@ -31,6 +32,7 @@ class MainWindow : public QMainWindow {
 
   void updateWeather(const weatherData &wData);
   void clearResults();
+  static bool isDayTime(std::time_t present, std::time_t sunrise, std::time_t sunset);
 };
 
 #endif // MAINWINDOW_H

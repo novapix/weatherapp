@@ -34,7 +34,8 @@ set(PROJECT_SOURCES
 
 if (TARGET Qt6::Widgets)
     qt_add_executable(weatherapp MANUAL_FINALIZATION ${PROJECT_SOURCES}
-        icons.qrc)
+        icons.qrc
+        resource.qrc)
 else ()
     add_executable(weatherapp ${PROJECT_SOURCES})
 endif ()
