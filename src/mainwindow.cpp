@@ -1,7 +1,6 @@
 #include "../include/mainwindow.h"
 #include "../include/apichecker.h"
 #include "../include/geocoding.h"
-#include <QJsonDocument>
 #include <QMessageBox>
 #include "../include/ui_mainwindow.h"
 #include <optional>
@@ -51,10 +50,9 @@ void MainWindow::fetchWeather() {
 	  QMessageBox::warning(this, "Error", "failed to fetch weather data");
 	}
   }
-  std::optional<weatherData> wdata = WeatherFetcher::parseWeather(res.resText);
-  if (wdata) {
-	weatherData data = wdata.value();
-	updateWeather(data);
+  std::optional<weatherData> data = WeatherFetcher::parseWeather(res.resText);
+  if (data) {
+	updateWeather(data.value());
 
   } else {
 	QMessageBox::warning(this, "Error", "Invalid JSON document.");
