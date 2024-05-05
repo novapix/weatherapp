@@ -18,7 +18,7 @@ typedef struct responseData {
 typedef struct wData {
   float temperature, temperatureMin, temperatureMax;
   float humidity;
-  int sunriseDT, sunsetDT, currentDt;
+  unsigned int sunriseDT, sunsetDT, currentDt;
   string icon;
 } weatherData;
 

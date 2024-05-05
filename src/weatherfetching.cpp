@@ -20,9 +20,9 @@ std::optional<weatherData> WeatherFetcher::parseWeather(const std::string &resTe
 	float maxTemp = static_cast<float>(jsonRes.object()["main"].toObject()["temp_max"].toDouble() - 273.15);
 	float minTemp = static_cast<float>(jsonRes.object()["main"].toObject()["temp_min"].toDouble() - 273.15);
 	float humidity = static_cast<float>(jsonRes.object()["main"].toObject()["humidity"].toDouble());
-	int currentDt = jsonRes.object()["dt"].toInt();
-	int sunriseDT = jsonRes.object()["sys"].toObject()["sunrise"].toInt();
-	int sunsetDT = jsonRes.object()["sys"].toObject()["sunset"].toInt();
+	unsigned int currentDt = jsonRes.object()["dt"].toInt();
+	unsigned int sunriseDT = jsonRes.object()["sys"].toObject()["sunrise"].toInt();
+	unsigned int sunsetDT = jsonRes.object()["sys"].toObject()["sunset"].toInt();
 	string icon = jsonRes.object()["weather"].toArray().at(0).toObject()["icon"].toString().toStdString() + ".png";
 	weatherData res = {
 		temperature, minTemp, maxTemp, humidity,

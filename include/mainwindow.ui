@@ -45,7 +45,7 @@
      <rect>
       <x>240</x>
       <y>40</y>
-      <width>111</width>
+      <width>110</width>
       <height>25</height>
      </rect>
     </property>
@@ -92,9 +92,9 @@ border: 1px solid transparent;
    <widget class="QPushButton" name="btnClear">
     <property name="geometry">
      <rect>
-      <x>359</x>
+      <x>360</x>
       <y>40</y>
-      <width>111</width>
+      <width>110</width>
       <height>25</height>
      </rect>
     </property>
